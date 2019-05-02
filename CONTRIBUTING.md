@@ -1,6 +1,6 @@
 # Contributing to NPM dependencies extractor 
 
-We'd love for you to contribute to our source code and to make the Forest even better than it is today! Here are the guidelines we'd like you to follow:
+We'd love for you to contribute to our source code and to make this tool even better than it is today! Here are the guidelines we'd like you to follow:
 
  - [Question or Problem?](#question)
  - [Issues and Bugs](#issue)
@@ -10,7 +10,7 @@ We'd love for you to contribute to our source code and to make the Forest even b
 
 ## <a name="question"></a> Got a Question or Problem?
 
-If you have questions about how to use the Forest, please direct these to the [Slack group / philips-software][slack].
+If you have questions about how to use this tool, please direct these to the [Slack group / philips-software][slack].
 
 [![Slack](https://philips-software-slackin.now.sh/badge.svg)](https://philips-software-slackin.now.sh)
 
