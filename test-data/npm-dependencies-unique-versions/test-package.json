@@ -1,0 +1,9 @@
+{
+  "name": "testData_npm_dependencies_5levels",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "package_A": "^A1.0.0",
+    "package_B": "^B1.0.0",
+  }
+}

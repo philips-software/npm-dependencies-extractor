@@ -1,0 +1,29 @@
+{
+  "name": "npm-dependencies-extractor",
+  "version": "1.0.0",
+  "description": "Retrieves the (flat) list of package dependencies for Javascript project using npm",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint src/**",
+    "test": "jest src",
+    "coverage": "jest --collectCoverageFrom=src/**.js --coverage src",
+    "extract-dependencies": "node ./src/index.js"
+  },
+  "author": "Sanda Contiu <sanda.contiu@philips.com>",
+  "license": "ISC",
+  "bin": {
+    "extract-dependencies": "./src/index.js"
+  },
+  "devDependencies": {
+    "eslint": "^5.13.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jest": "^22.2.2",
+    "jest": "^24.1.0"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.19.0",
+    "fs-extra": "^7.0.1"
+  }
+}
