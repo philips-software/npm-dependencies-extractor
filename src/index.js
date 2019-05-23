@@ -3,7 +3,6 @@
 const program = require('commander');
 const fs = require('fs-extra');
 const chalk = require('chalk');
-
 const dependencyExtractor = require('./dependencies-extractor');
 const formatter = require('./formatter');
 
@@ -39,37 +38,22 @@ const errorMessage = (message, verboseMessage) => {
 const GetFileEncodingHeader = (filePath) => {
   const readStream = fs.openSync(filePath, 'r');
   const bufferSize = 2;
-  const buffer = new Buffer(bufferSize);
+  const buffer = Buffer.alloc(bufferSize);
   let readBytes = 0;
 
   if (readBytes = fs.readSync(readStream, buffer, 0, bufferSize, 0)) {
-      return buffer.slice(0, readBytes).toString("hex");
-  }   
+      const header = buffer.slice(0, readBytes).toString("hex");
 
-  return "";
-}
-
-const ReadFileSyncUtf8 = (filePath) => {
-  const fileEncoding = GetFileEncodingHeader(filePath);
-  let content = null;
-
-  if (fileEncoding === "fffe" || fileEncoding === "utf16le") {
-      content = fs.readFileSync(filePath, "ucs2"); // utf-16 Little Endian
-  } else if (fileEncoding === "feff" || fileEncoding === "utf16be") {
-      content = fs.readFileSync(filePath, "uts2").swap16(); // utf-16 Big Endian
-  } else {
-      content = fs.readFileSync(filePath, "utf8");
+      if (header === "fffe") {
+          return "utf16le";
+      } else if (header === "feff") {
+          return "utf16be";
+      } else if (header.startsWith("ff") || header.startsWith("fe") || header.startsWith("ef")) {
+          return "utf8";
+      }
   }
 
-  // trim removes the header...but there may be a better way!
-  return content.toString("utf8").trimStart();
-}
-
-const GetJson = (filePath) => {
-  const jsonContents = ReadFileSyncUtf8(filePath);
-  infoMessage(`Found file encoding header: ` + GetFileEncodingHeader(filePath));
-
-  return JSON.parse(jsonContents);
+  return "";
 }
 
 const processFiles = async () => {
@@ -80,7 +64,7 @@ const processFiles = async () => {
   );
 
   try {
-    dependencies = GetJson(input);
+    dependencies = await fs.readJSON(input, GetFileEncodingHeader(input));
   } catch (e) {
     errorMessage(chalk`Could not open {blue ${input}} for reading...`, e);
     return;
