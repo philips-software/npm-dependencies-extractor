@@ -50,6 +50,9 @@ or
 npm list --json --prod > inputFile.json
 ```
 
+- The following encodings of the input file are supported: utf8, utf16le.
+  If the input file does not have a header containing the byte order mark, then you need to provide the encoding parameter, else the encoding is assumed to be utf8.
+
 ## Installation
 Install globally:
 ```shell
@@ -68,6 +71,7 @@ extract-dependencies [options]
 | Flag              | Alias | Functionality
 | ----------------- |:-----:| -------------------------------------
 | --input [filename]|  -i   | Filename of the package-lock.json file to extract dependencies from. Default value: package-lock.json
+| --encoding |  -e   | Encoding of the input file. Allowed values: utf8, utf16le.
 | --output [filename]|  -o   | Js filename to which the flat list of dependencies is written. If the file already exists, it will be overwritten. Default value: dependencies.js. One more representation of the flat dependencies is generated, in the form of text (as <output>.txt)
 | --verbose         |       | Verbose output of commands and errors
 
