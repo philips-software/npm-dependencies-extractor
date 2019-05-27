@@ -3,6 +3,7 @@
 const program = require('commander');
 const fs = require('fs-extra');
 const chalk = require('chalk');
+const { setVerbose, infoMessage, errorMessage } = require ('./message-handler');
 const dependencyExtractor = require('./dependencies-extractor');
 const formatter = require('./formatter');
 
@@ -23,21 +24,6 @@ const {
 } = program;
 
 const txtOutput = `${output}.txt`;
-
-const infoMessage = (message, verboseMessage) => {
-  console.log(chalk`{green v} ${message}`);
-  if (verbose && verboseMessage) {
-    console.log(`  ${verboseMessage}`);
-  }
-};
-
-const errorMessage = (message, verboseMessage) => {
-  console.error(chalk`{red x} ${message}`);
-
-  if (verbose && verboseMessage) {
-    console.error(`  Detailed error: ${verboseMessage}`);
-  }
-};
 
 const nodeJsEncodingValue = {
   hex: 'hex',
@@ -125,6 +111,8 @@ const getNodeJsEncodingForFile = (filePath) => {
 };
 
 const processFiles = async () => {
+  setVerbose(verbose);
+  
   let dependencies;
   infoMessage(
     chalk`Extracting information from {blue ${input}}...`,
