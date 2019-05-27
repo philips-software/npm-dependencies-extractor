@@ -50,6 +50,9 @@ or
 npm list --json --prod > inputFile.json
 ```
 
+- The following encodings of the input file are supported: utf8, utf16le.
+  If the input file does not have a header containing the byte order mark, then you need to provide the encoding parameter, else the encoding is assumed to be utf8.
+
 ## Installation
 Install globally:
 ```shell
@@ -68,6 +71,7 @@ extract-dependencies [options]
 | Flag              | Alias | Functionality
 | ----------------- |:-----:| -------------------------------------
 | --input [filename]|  -i   | Filename of the package-lock.json file to extract dependencies from. Default value: package-lock.json
+| --encoding |  -e   | Encoding of the input file. Allowed values: utf8, utf16le.
 | --output [filename]|  -o   | Js filename to which the flat list of dependencies is written. If the file already exists, it will be overwritten. Default value: dependencies.js. One more representation of the flat dependencies is generated, in the form of text (as <output>.txt)
 | --verbose         |       | Verbose output of commands and errors
 
@@ -88,4 +92,14 @@ npx npm-dependencies-extractor extract-dependencies [options]
 ```shell
 extract-dependencies [options] 
 ```
+## FAQ
+1.
+>   _Question_: I get an 'Unexpected token' error when my input JSON file is read; why?
+>   
+>   _Answer_: This is most likely caused because your file is encoded in a format not supported yet, 
+>   or because your file format is supported but its header does not contain a byte order mark (BOM) to describe its encoding.
+>   In the latter case, please provide to the script the encoding known by you by means of an additional parameter, like:
+`--encoding <encodingOfTheInputFile>`.
+>
+>   Currenlty supported values for encoding are:  utf8, utf16le
 
