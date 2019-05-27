@@ -92,4 +92,14 @@ npx npm-dependencies-extractor extract-dependencies [options]
 ```shell
 extract-dependencies [options] 
 ```
+## FAQ
+1.
+>   _Question_: I get an 'Unexpected token' error when my input JSON file is read; why?
+>   
+>   _Answer_: This is most likely caused because your file is encoded in a format not supported yet, 
+>   or because your file format is supported but its header does not contain a byte order mark (BOM) to describe its encoding.
+>   In the latter case, please provide to the script the encoding known by you by means of an additional parameter, like:
+`--encoding <encodingOfTheInputFile>`.
+>
+>   Currenlty supported values for encoding are:  utf8, utf16le
 
