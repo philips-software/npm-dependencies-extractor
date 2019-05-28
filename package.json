@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Retrieves the (flat) list of package dependencies for Javascript project using npm",
   "main": "index.js",
+  "repository": "philips-software/npm-dependencies-extractor",
   "scripts": {
     "lint": "eslint src/**",
     "test": "jest src",
