@@ -1,6 +1,6 @@
 {
   "name": "npm-dependencies-extractor",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Retrieves the (flat) list of package dependencies for Javascript project using npm",
   "main": "index.js",
   "scripts": {
