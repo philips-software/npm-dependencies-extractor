@@ -1,8 +1,9 @@
 {
   "name": "npm-dependencies-extractor",
-  "version": "1.0.0",
-  "description": "Retrieves the (flat) list of package dependencies for Javascript project using npm",
+  "version": "0.0.4",
+  "description": "Retrieves the (flat) list of package dependencies for Javascript projects using npm",
   "main": "index.js",
+  "repository": "philips-software/npm-dependencies-extractor",
   "scripts": {
     "lint": "eslint src/**",
     "test": "jest src",
@@ -14,6 +15,14 @@
   "bin": {
     "extract-dependencies": "./src/index.js"
   },
+  "keywords": [
+    "dependencies",
+    "npm",
+    "flat list",
+    "dependencies flat list",
+    "extract dependencies",
+    "list dependencies"
+  ],
   "devDependencies": {
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",

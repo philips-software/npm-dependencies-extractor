@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+- 8
+deploy:
+  provider: npm
+  email: sanda.contiu@philips.com
+  api_key:
+    secure: B5qhgQSLd4SphrYGtcsW9tqlW+21+vdfOPFX9I0jb/A6B0hQVGKEb+zcSa8VHDxp4O4KlEPrRUVDwbrIrB+ZEwiIdHDJLWjCiO3FtYW9Eoi+FyLTOurrHSeAkV37/vaf5g22/eEGIktAu13wA2CEhQVs2M//9p1TZV7tPnVv56SlG5yvSqccazXhOvkRh1hIUvqp7MW/FtF5jZYW9DYN3jeQhKdSOotZP0pVfamL2YiGUVAW9Ov9Zf5zknYJwNuN+XmDxBBp/iplSRJnz6BeNEcFTDJJSnwv9wDeBvsr9B7SPvK9AK9AVJS3w6PadCoqaYjYNyBBDiwzBpPveD79UHX1QCk30GTFZ0q/Wfc6P0WjLSD6MdCuHtRMXEYeXoaqgdV+/xDHLoqwRvdaXwGqBB/PkfKD7jK6perSm5Y58FwHK2KVIIsio0MZTvxlSTGs5TJ8zjbSnYDv324WzmI8wiDMQ6FLBCdO4BPDoZw6ZJtnN/b3TrXLQ6cNCFOcQoffkfamxJj5anzEmPbx/kdJ37tudy25x1M0UVwpN+8AI4+vBvn91fpBDrkrr7SrCjVLKL5TCkaNwND/6M6rHje7+K7nZJ1Kq9NiY3KwlXFSsf6i5g1uxuP+rFZAdAlden8xPDHYWtssvZEl1prOmIN7zWyX/y09AOTrLZlAd6vDd8s=
+  on:
+    tags: true
