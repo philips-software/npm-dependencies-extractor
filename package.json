@@ -15,6 +15,14 @@
   "bin": {
     "extract-dependencies": "./src/index.js"
   },
+  "keywords": [
+    "dependencies",
+    "npm",
+    "flat list",
+    "dependencies flat list",
+    "extract dependencies",
+    "list dependencies"
+  ],
   "devDependencies": {
     "eslint": "^5.13.0",
     "eslint-config-airbnb-base": "^13.1.0",
