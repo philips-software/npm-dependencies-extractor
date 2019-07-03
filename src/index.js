@@ -53,6 +53,11 @@ const processFiles = async () => {
     return;
   }
 
+  if (!dependencies.dependencies) {
+    infoMessage(chalk`No dependencies found in {blue ${input}}, exiting.`);
+    return;
+  }
+
   const extractedDependenciesJsonArr = dependencyExtractor.getFlatListOfDependencies(dependencies);
 
   infoMessage(
