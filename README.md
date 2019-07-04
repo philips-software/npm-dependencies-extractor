@@ -13,7 +13,8 @@ npm list --json --prod > inputFile.json
 Why the need to create npm-dependencies-extractor?
 The dependencies information as output by the package-lock.json or the npm list command is verbose, and requires some processing if you simply want to retrieve a (flat) list of your dependencies. Also, package-lock.json may contain more times a dependency that is present in different branches of the dependency tree.
 
-__npm-dependencies-extractor__ generates, from your input, the flat list of dependencies, in two formats.
+When there is no dependency in your input file, the script exits after notifying the user.
+When your input does have dependencies, __npm-dependencies-extractor__ generates, from your input, the flat list of dependencies, in two formats.
 The first output format is a js file containing the array of dependencies formatted as JSON objects (with keys *name* and *version*), with no nesting, like:
 ```
     [
