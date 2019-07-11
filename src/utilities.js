@@ -43,7 +43,16 @@ const getUniquesByNameAndVersion = (array) => {
   return result;
 };
 
+const isValidPackageLockJson = input => typeof input !== 'undefined'
+    && typeof input.dependencies !== 'undefined'
+    && !Object.entries(input.dependencies).find(
+      entry => typeof entry === 'undefined'
+        || typeof entry[1] === 'undefined'
+        || typeof entry[1].version === 'undefined',
+    );
+
 module.exports = {
   sortByNameAndVersionCaseInsensitive,
   getUniquesByNameAndVersion,
+  isValidPackageLockJson,
 };

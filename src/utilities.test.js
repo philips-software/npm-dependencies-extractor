@@ -108,3 +108,8 @@ test('getUniquesByNameAndVersion called on list with duplicated (upper cased) co
       { [NAME_KEY]: 'package_C', [VERSION_KEY]: 'C1_THREETIMES.0.0' },
     ]);
 });
+
+test('isValidPackageLockJson returns false if input is incorrect', () => {
+  const input = { dependencies: { 'some package': { } } };
+  expect(utilities.isValidPackageLockJson(input)).toBe(false);
+});
