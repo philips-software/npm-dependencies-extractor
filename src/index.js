@@ -11,6 +11,7 @@ const {
 const { getNodeJsEncodingForFile } = require('./file-encoding-matcher');
 const dependencyExtractor = require('./dependencies-extractor');
 const formatter = require('./formatter');
+const utilities = require('./utilities');
 
 program
   .version('0.0.1', '-v, --version')
@@ -55,6 +56,11 @@ const processFiles = async () => {
 
   if (!dependencies.dependencies) {
     infoMessage(chalk`No dependencies found in {blue ${input}}, exiting.`);
+    return;
+  }
+
+  if (!utilities.isValidPackageLockJson(dependencies)) {
+    infoMessage(chalk`Input {blue ${input}} not a valid {blue package-lock.json} format, exiting.`);
     return;
   }
 
