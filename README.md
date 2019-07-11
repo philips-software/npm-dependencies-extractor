@@ -63,7 +63,7 @@ npm install -g npm-dependencies-extractor
 ```
 Or you could use it without installing by running:
 ```shell
-npx npm-dependencies-extractor extract-dependencies [options]
+npx npm-dependencies-extractor [options]
 ```
 
 # Usage
@@ -88,8 +88,13 @@ npm run extract-dependencies -- [options]
 ```
 or, if you don't want to install it, run:
 ```
-npx npm-dependencies-extractor extract-dependencies [options]
+npx npm-dependencies-extractor [options]
 ```
+or, if you don't want to install it from github master, run:
+```
+npx github:philips-software/npm-dependencies-extractor [options]
+```
+
 
 ### Scenario 2: You include the npm-dependencies-extractor as a dependency of your project, and call its command in your project's scripts, by:
 ```shell
