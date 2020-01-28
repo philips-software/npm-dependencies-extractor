@@ -13,6 +13,11 @@ const plJsonUniqueVersions = require(packageLockFileUniqueVersions);
 // eslint-disable-next-line import/no-dynamic-require
 const plJsonOnlyProdDependencies5Levels = require(packageLockFileNoDev5Levels);
 
+const packageLock2MandatoryDependencies = require('../test-data/input-with-optionals/package-lock-with-2-mandatory-dependencies.json');
+const packageLock3DeclaredOptionalDependenciesAllActuallyOptional = require('../test-data/input-with-optionals/package-lock-with-total-3-dependencies-3-optionals-not-required-by-any-mandatory-dependency.json');
+const packageLock4Dependencies3DeclaredOptionalActually2Optional = require('../test-data/input-with-optionals/package-lock-with-total-4-dependencies-3-optionals-of-which-1-also-occurs-as-mandatory.json');
+
+
 /*
 The package-lock.json loaded in the next test case reflects the
 package dependencies depicted below.
@@ -166,4 +171,38 @@ describe('isDependencyOptional', () => {
       expect(dependenciesExtractor.isDependencyOptional({ jsonDependencyDetails }))
         .toBe(false);
     });
+});
+
+
+describe('getFlatListOfDependencies deals with optional dependencies as follows:', () => {
+  it(`extracts all mandatory dependencies from input ${packageLock2MandatoryDependencies}`,
+    () => {
+      expect(dependenciesExtractor
+        .getFlatListOfDependencies(packageLock2MandatoryDependencies))
+        .toEqual([
+          { [NAME_KEY]: '@babel/code-frame', [VERSION_KEY]: '7.5.5' },
+          { [NAME_KEY]: '@babel/highlight', [VERSION_KEY]: '7.5.0' },
+        ]);
+    });
+
+  // eslint-disable-next-line prefer-template
+  it('extracts zero dependencies from input (when input\'s dependencies are all optional) '
+    + packageLock3DeclaredOptionalDependenciesAllActuallyOptional,
+  () => {
+    expect(dependenciesExtractor
+      .getFlatListOfDependencies(packageLock3DeclaredOptionalDependenciesAllActuallyOptional))
+      .toEqual([]);
+  });
+
+  // eslint-disable-next-line prefer-template
+  it('extracts all mandatory dependencies from input json '
+    + packageLock4Dependencies3DeclaredOptionalActually2Optional,
+  () => {
+    expect(dependenciesExtractor
+      .getFlatListOfDependencies(packageLock4Dependencies3DeclaredOptionalActually2Optional))
+      .toEqual([
+        { [NAME_KEY]: 'ansi-regex', [VERSION_KEY]: '2.1.1' },
+        { [NAME_KEY]: 'has-ansi', [VERSION_KEY]: '2.0.0' },
+      ]);
+  });
 });
