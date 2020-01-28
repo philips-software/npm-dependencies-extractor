@@ -1,6 +1,6 @@
 {
   "name": "npm-dependencies-extractor",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Retrieves the (flat) list of package dependencies for Javascript projects using npm",
   "main": "index.js",
   "repository": "philips-software/npm-dependencies-extractor",
@@ -18,7 +18,11 @@
   "keywords": [
     "dependencies",
     "npm",
+    "sbom",
+    "software bill of material",
     "flat list",
+    "extract",
+    "retrieve",
     "dependencies flat list",
     "extract dependencies",
     "list dependencies"
