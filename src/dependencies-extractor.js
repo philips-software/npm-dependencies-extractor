@@ -3,6 +3,9 @@ const {
   formatDependencyAsJsonObject,
 } = require('./formatter');
 
+const isDependencyOptional = ({ jsonDependencyDetails }) => Object.keys(jsonDependencyDetails).includes('optional')
+    && (jsonDependencyDetails.optional === true);
+
 // Gets the dependencies from the 'dependencies' attribute
 const getRecursivelyDependenciesReducer = (accumulator, currentPackageKeyPairTwoSizedArray) => {
   // Push the current package info (name and version only)
@@ -34,4 +37,5 @@ const getFlatListOfDependencies = inputJsonDependencies => utilities
 
 module.exports = {
   getFlatListOfDependencies,
+  isDependencyOptional,
 };

@@ -130,3 +130,40 @@ test('Tests that getFlatListOfDependencies '
       { [NAME_KEY]: 'package_I', [VERSION_KEY]: '2.0.0' },
     ]);
 });
+
+describe('isDependencyOptional', () => {
+  it('returns true for a dependency json with key "optional" set to true',
+    () => {
+      const jsonDependencyDetails = {
+        version: '2.14.0',
+        resolved: 'https://registry.npmjs.org/nan/-/nan-2.14.0.tgz',
+        integrity: 'some-key',
+        optional: true,
+      };
+      expect(dependenciesExtractor.isDependencyOptional({ jsonDependencyDetails }))
+        .toBe(true);
+    });
+
+  it('returns false for a dependency json with key "optional" set to false',
+    () => {
+      const jsonDependencyDetails = {
+        version: '2.14.0',
+        resolved: 'https://registry.npmjs.org/nan/-/nan-2.14.0.tgz',
+        integrity: 'some-key',
+        optional: false,
+      };
+      expect(dependenciesExtractor.isDependencyOptional({ jsonDependencyDetails }))
+        .toBe(false);
+    });
+
+  it('returns false for a dependency json with no key "optional"',
+    () => {
+      const jsonDependencyDetails = {
+        version: '2.14.0',
+        resolved: 'https://registry.npmjs.org/nan/-/nan-2.14.0.tgz',
+        integrity: 'some-key',
+      };
+      expect(dependenciesExtractor.isDependencyOptional({ jsonDependencyDetails }))
+        .toBe(false);
+    });
+});
