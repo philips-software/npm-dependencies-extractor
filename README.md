@@ -78,12 +78,15 @@ npx npm-dependencies-extractor [options]
 extract-dependencies [options]
 ```
 ### Supported options:
-| Flag              | Alias | Functionality
-| ----------------- |:-----:| -------------------------------------
-| --input [filename]|  -i   | Filename of the package-lock.json file to extract dependencies from. Default value: package-lock.json
-| --encoding |  -e   | Encoding of the input file. Allowed values: utf8, utf16le.
+| Flag               | Alias | Functionality
+| ------------------ |:-----:| -------------------------------------
+| --input [filename] |  -i   | Filename of the package-lock.json file to extract dependencies from. Default value: package-lock.json
+| --encoding         |  -e   | (optional) Encoding of the input file. Allowed values: utf8, utf16le.
+| --optionals        |  -io  | (optional) include optional dependencies 
+| --devdependencies  |  -d   | (optional) ignore dev dependencies
 | --output [filename]|  -o   | Js filename to which the flat list of dependencies is written. If the file already exists, it will be overwritten. Default value: dependencies.js. One more representation of the flat dependencies is generated, in the form of text (as <output>.txt)
-| --verbose         |       | Verbose output of commands and errors
+| --verbose          |       | Verbose output of commands and errors
+| --help             |  -h   | Display help for command 
 
 ### Sample usage
 
