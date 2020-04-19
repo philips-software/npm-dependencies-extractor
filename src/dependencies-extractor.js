@@ -3,14 +3,19 @@ const {
   formatDependencyAsJsonObject,
 } = require('./formatter');
 
-const isDependencyOptional = ({ jsonDependencyDetails }) => Object.keys(jsonDependencyDetails).includes('optional')
+const isDependencyOptional = (jsonDependencyDetails) => Object.keys(jsonDependencyDetails).includes('optional')
     && (jsonDependencyDetails.optional === true);
 
+const isDevDependency = (jsonDependencyDetails) => Object.keys(jsonDependencyDetails).includes('dev')
+    && (jsonDependencyDetails.dev === true);
+
 let ignoreOptionalDependencies
+let ignoreDevDependencies
 
 // Gets the dependencies from the 'dependencies' attribute
 const getRecursivelyDependenciesReducer = (accumulator, currentPackageKeyPairTwoSizedArray) => {
-  if (!ignoreOptionalDependencies || !isDependencyOptional({ jsonDependencyDetails: currentPackageKeyPairTwoSizedArray[1] })) {
+  if ((!ignoreOptionalDependencies || !isDependencyOptional(currentPackageKeyPairTwoSizedArray[1])) &&
+      (!ignoreDevDependencies || !isDevDependency(currentPackageKeyPairTwoSizedArray[1]))) {
     // Push the current package info (name and version only)
     accumulator.push(
       formatDependencyAsJsonObject(
@@ -35,8 +40,9 @@ const getRawFlatListOfDependencies = inputJsonDependencies => Object
   .entries(inputJsonDependencies.dependencies)
   .reduce(getRecursivelyDependenciesReducer, []);
 
-const getFlatListOfDependencies = (inputJsonDependencies, includeOptionals) => {
-  ignoreOptionalDependencies = !includeOptionals;
+const getFlatListOfDependencies = (inputJsonDependencies, configuration) => {
+  ignoreOptionalDependencies = !configuration.includeOptionals;
+  ignoreDevDependencies = configuration.ignoreDevDependencies;
   return utilities
     .sortByNameAndVersionCaseInsensitive(utilities
       .getUniquesByNameAndVersion(getRawFlatListOfDependencies(inputJsonDependencies)));

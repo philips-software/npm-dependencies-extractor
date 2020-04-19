@@ -17,6 +17,10 @@ const packageLock2MandatoryDependencies = require('../test-data/input-with-optio
 const packageLock3DeclaredOptionalDependenciesAllActuallyOptional = require('../test-data/input-with-optionals/package-lock-with-total-3-dependencies-3-optionals-not-required-by-any-mandatory-dependency.json');
 const packageLock4Dependencies3DeclaredOptionalActually2Optional = require('../test-data/input-with-optionals/package-lock-with-total-4-dependencies-3-optionals-of-which-1-also-occurs-as-mandatory.json');
 
+const configuration = {
+  includeOptionals: false,
+  ignoreDevDependencies: false
+}
 
 /*
 The package-lock.json loaded in the next test case reflects the
@@ -56,7 +60,7 @@ test('Tests that getFlatListOfDependencies '
   + '\n - correctly matches the versions to packages (no mixing) '
   + '\n - provides dependencies in a sorted list which contains unique name + version pairs. ', () => {
   expect(dependenciesExtractor
-    .getFlatListOfDependencies(plJsonUniqueVersions, false))
+    .getFlatListOfDependencies(plJsonUniqueVersions, configuration))
     .toEqual([
       { [NAME_KEY]: 'package_A', [VERSION_KEY]: 'A1.0.0' },
       { [NAME_KEY]: 'package_B', [VERSION_KEY]: 'B1.0.0' },
@@ -115,7 +119,7 @@ test('Tests that getFlatListOfDependencies '
   + '\n - only reports once the dependencies that show up more times in the dependency tree '
   + '\n - provides dependencies in a sorted list which contains unique name + version pairs.', () => {
   expect(dependenciesExtractor
-    .getFlatListOfDependencies(plJsonOnlyProdDependencies5Levels, false))
+    .getFlatListOfDependencies(plJsonOnlyProdDependencies5Levels, configuration))
     .toEqual([
       { [NAME_KEY]: 'package_A', [VERSION_KEY]: '1.0.0' },
       { [NAME_KEY]: 'package_B', [VERSION_KEY]: '1.0.0' },
@@ -145,7 +149,7 @@ describe('isDependencyOptional', () => {
         integrity: 'some-key',
         optional: true,
       };
-      expect(dependenciesExtractor.isDependencyOptional({ jsonDependencyDetails }))
+      expect(dependenciesExtractor.isDependencyOptional(jsonDependencyDetails))
         .toBe(true);
     });
 
@@ -157,7 +161,7 @@ describe('isDependencyOptional', () => {
         integrity: 'some-key',
         optional: false,
       };
-      expect(dependenciesExtractor.isDependencyOptional({ jsonDependencyDetails }))
+      expect(dependenciesExtractor.isDependencyOptional(jsonDependencyDetails))
         .toBe(false);
     });
 
@@ -168,7 +172,7 @@ describe('isDependencyOptional', () => {
         resolved: 'https://registry.npmjs.org/nan/-/nan-2.14.0.tgz',
         integrity: 'some-key',
       };
-      expect(dependenciesExtractor.isDependencyOptional({ jsonDependencyDetails }))
+      expect(dependenciesExtractor.isDependencyOptional(jsonDependencyDetails))
         .toBe(false);
     });
 });
@@ -178,7 +182,7 @@ describe('getFlatListOfDependencies deals with optional dependencies as follows:
   it(`extracts all mandatory dependencies from input ${packageLock2MandatoryDependencies}`,
     () => {
       expect(dependenciesExtractor
-        .getFlatListOfDependencies(packageLock2MandatoryDependencies, false))
+        .getFlatListOfDependencies(packageLock2MandatoryDependencies, configuration))
         .toEqual([
           { [NAME_KEY]: '@babel/code-frame', [VERSION_KEY]: '7.5.5' },
           { [NAME_KEY]: '@babel/highlight', [VERSION_KEY]: '7.5.0' },
@@ -190,7 +194,7 @@ describe('getFlatListOfDependencies deals with optional dependencies as follows:
     + packageLock3DeclaredOptionalDependenciesAllActuallyOptional,
   () => {
     expect(dependenciesExtractor
-      .getFlatListOfDependencies(packageLock3DeclaredOptionalDependenciesAllActuallyOptional, false))
+      .getFlatListOfDependencies(packageLock3DeclaredOptionalDependenciesAllActuallyOptional, configuration))
       .toEqual([]);
   });
 
@@ -199,7 +203,7 @@ describe('getFlatListOfDependencies deals with optional dependencies as follows:
     + packageLock4Dependencies3DeclaredOptionalActually2Optional,
   () => {
     expect(dependenciesExtractor
-      .getFlatListOfDependencies(packageLock4Dependencies3DeclaredOptionalActually2Optional, false))
+      .getFlatListOfDependencies(packageLock4Dependencies3DeclaredOptionalActually2Optional, configuration))
       .toEqual([
         { [NAME_KEY]: 'ansi-regex', [VERSION_KEY]: '2.1.1' },
         { [NAME_KEY]: 'has-ansi', [VERSION_KEY]: '2.0.0' },

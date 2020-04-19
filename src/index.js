@@ -24,10 +24,11 @@ program
   )
   .option('-e, --encoding [value]', '(optional) specifies the encoding of the input file. One of: utf8, utf16le')
   .option('-io, --optionals', '(optional) include optional dependencies ')
+  .option('-d, --devdependencies', '(optional) ignore dev dependencies ')
   .parse(process.argv);
 
 const {
-  input, encoding, output, verbose, optionals
+  input, encoding, output, verbose, optionals, devdependencies
 } = program;
 
 const txtOutput = `${output}.txt`;
@@ -41,14 +42,37 @@ const processFiles = async () => {
     chalk`Program arguments:\n    input: {blue ${input}}\n    encoding: {blue ${encoding}}\n    output: {blue ${output}}\n    verbose: {blue ${verbose}}`,
   );
 
-  let includeOptionals = optionals;
+  let configuration;
+
   if (!optionals) {
     infoMessage(
       chalk`  No optionals parameter was set; We're ignoring them...`,
     );
-    includeOptionals = false;
+    configuration = {
+      ...configuration,
+      includeOptionals: false
+    }
   } else {
-    includeOptionals = true;
+    configuration = {
+      ...configuration,
+      includeOptionals: true
+    }
+  }
+
+  let ignoreDevDependencies
+  if (!devdependencies) {
+    infoMessage(
+      chalk`  No devdependencies parameter was set; We're adding them to the list...`,
+    );
+    configuration = {
+      ...configuration,
+      ignoreDevDependencies: false
+    }
+  } else {
+    configuration = {
+      ...configuration,
+      ignoreDevDependencies: true
+    }
   }
 
   try {
@@ -75,7 +99,7 @@ const processFiles = async () => {
     return;
   }
 
-  const extractedDependenciesJsonArr = dependencyExtractor.getFlatListOfDependencies(dependencies, includeOptionals);
+  const extractedDependenciesJsonArr = dependencyExtractor.getFlatListOfDependencies(dependencies, configuration);
 
   infoMessage(
     chalk`Writing {blue ${extractedDependenciesJsonArr.length}} dependencies as JSON array to {blue ${output}}`,
