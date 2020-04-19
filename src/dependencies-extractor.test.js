@@ -56,7 +56,7 @@ test('Tests that getFlatListOfDependencies '
   + '\n - correctly matches the versions to packages (no mixing) '
   + '\n - provides dependencies in a sorted list which contains unique name + version pairs. ', () => {
   expect(dependenciesExtractor
-    .getFlatListOfDependencies(plJsonUniqueVersions))
+    .getFlatListOfDependencies(plJsonUniqueVersions, false))
     .toEqual([
       { [NAME_KEY]: 'package_A', [VERSION_KEY]: 'A1.0.0' },
       { [NAME_KEY]: 'package_B', [VERSION_KEY]: 'B1.0.0' },
@@ -115,7 +115,7 @@ test('Tests that getFlatListOfDependencies '
   + '\n - only reports once the dependencies that show up more times in the dependency tree '
   + '\n - provides dependencies in a sorted list which contains unique name + version pairs.', () => {
   expect(dependenciesExtractor
-    .getFlatListOfDependencies(plJsonOnlyProdDependencies5Levels))
+    .getFlatListOfDependencies(plJsonOnlyProdDependencies5Levels, false))
     .toEqual([
       { [NAME_KEY]: 'package_A', [VERSION_KEY]: '1.0.0' },
       { [NAME_KEY]: 'package_B', [VERSION_KEY]: '1.0.0' },
@@ -178,7 +178,7 @@ describe('getFlatListOfDependencies deals with optional dependencies as follows:
   it(`extracts all mandatory dependencies from input ${packageLock2MandatoryDependencies}`,
     () => {
       expect(dependenciesExtractor
-        .getFlatListOfDependencies(packageLock2MandatoryDependencies))
+        .getFlatListOfDependencies(packageLock2MandatoryDependencies, false))
         .toEqual([
           { [NAME_KEY]: '@babel/code-frame', [VERSION_KEY]: '7.5.5' },
           { [NAME_KEY]: '@babel/highlight', [VERSION_KEY]: '7.5.0' },
@@ -190,7 +190,7 @@ describe('getFlatListOfDependencies deals with optional dependencies as follows:
     + packageLock3DeclaredOptionalDependenciesAllActuallyOptional,
   () => {
     expect(dependenciesExtractor
-      .getFlatListOfDependencies(packageLock3DeclaredOptionalDependenciesAllActuallyOptional))
+      .getFlatListOfDependencies(packageLock3DeclaredOptionalDependenciesAllActuallyOptional, false))
       .toEqual([]);
   });
 
@@ -199,7 +199,7 @@ describe('getFlatListOfDependencies deals with optional dependencies as follows:
     + packageLock4Dependencies3DeclaredOptionalActually2Optional,
   () => {
     expect(dependenciesExtractor
-      .getFlatListOfDependencies(packageLock4Dependencies3DeclaredOptionalActually2Optional))
+      .getFlatListOfDependencies(packageLock4Dependencies3DeclaredOptionalActually2Optional, false))
       .toEqual([
         { [NAME_KEY]: 'ansi-regex', [VERSION_KEY]: '2.1.1' },
         { [NAME_KEY]: 'has-ansi', [VERSION_KEY]: '2.0.0' },

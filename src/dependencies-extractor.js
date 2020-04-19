@@ -6,9 +6,11 @@ const {
 const isDependencyOptional = ({ jsonDependencyDetails }) => Object.keys(jsonDependencyDetails).includes('optional')
     && (jsonDependencyDetails.optional === true);
 
+let ignoreOptionalDependencies
+
 // Gets the dependencies from the 'dependencies' attribute
 const getRecursivelyDependenciesReducer = (accumulator, currentPackageKeyPairTwoSizedArray) => {
-  if (!isDependencyOptional({ jsonDependencyDetails: currentPackageKeyPairTwoSizedArray[1] })) {
+  if (!ignoreOptionalDependencies || !isDependencyOptional({ jsonDependencyDetails: currentPackageKeyPairTwoSizedArray[1] })) {
     // Push the current package info (name and version only)
     accumulator.push(
       formatDependencyAsJsonObject(
@@ -33,9 +35,12 @@ const getRawFlatListOfDependencies = inputJsonDependencies => Object
   .entries(inputJsonDependencies.dependencies)
   .reduce(getRecursivelyDependenciesReducer, []);
 
-const getFlatListOfDependencies = inputJsonDependencies => utilities
-  .sortByNameAndVersionCaseInsensitive(utilities
-    .getUniquesByNameAndVersion(getRawFlatListOfDependencies(inputJsonDependencies)));
+const getFlatListOfDependencies = (inputJsonDependencies, includeOptionals) => {
+  ignoreOptionalDependencies = !includeOptionals;
+  return utilities
+    .sortByNameAndVersionCaseInsensitive(utilities
+      .getUniquesByNameAndVersion(getRawFlatListOfDependencies(inputJsonDependencies)));
+}
 
 module.exports = {
   getFlatListOfDependencies,

@@ -23,10 +23,11 @@ program
     'package-lock.json',
   )
   .option('-e, --encoding [value]', '(optional) specifies the encoding of the input file. One of: utf8, utf16le')
+  .option('-io, --optionals', '(optional) include optional dependencies ')
   .parse(process.argv);
 
 const {
-  input, encoding, output, verbose,
+  input, encoding, output, verbose, optionals
 } = program;
 
 const txtOutput = `${output}.txt`;
@@ -39,6 +40,16 @@ const processFiles = async () => {
     chalk`Extracting information from {blue ${input}}...`,
     chalk`Program arguments:\n    input: {blue ${input}}\n    encoding: {blue ${encoding}}\n    output: {blue ${output}}\n    verbose: {blue ${verbose}}`,
   );
+
+  let includeOptionals = optionals;
+  if (!optionals) {
+    infoMessage(
+      chalk`  No optionals parameter was set; We're ignoring them...`,
+    );
+    includeOptionals = false;
+  } else {
+    includeOptionals = true;
+  }
 
   try {
     let actualEncoding = encoding;
@@ -64,7 +75,7 @@ const processFiles = async () => {
     return;
   }
 
-  const extractedDependenciesJsonArr = dependencyExtractor.getFlatListOfDependencies(dependencies);
+  const extractedDependenciesJsonArr = dependencyExtractor.getFlatListOfDependencies(dependencies, includeOptionals);
 
   infoMessage(
     chalk`Writing {blue ${extractedDependenciesJsonArr.length}} dependencies as JSON array to {blue ${output}}`,
