@@ -59,7 +59,6 @@ const processFiles = async () => {
     }
   }
 
-  let ignoreDevDependencies
   if (!devdependencies) {
     infoMessage(
       chalk`  No devdependencies parameter was set; We're adding them to the list...`,
