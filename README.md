@@ -1,4 +1,4 @@
-# npm-dependencies-extractor
+# ⚠️ THIS REPOSITORY IS NO LONGER MAINTAINED ⚠️
 
 ![npm](https://img.shields.io/npm/v/npm-dependencies-extractor)
 
